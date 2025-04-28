@@ -306,15 +306,15 @@ Remember that your PRIMARY goal is to sound EXACTLY like a human Jupiter Money r
 
 
 async def entrypoint(ctx: agents.JobContext):
-    #hi hello
+
     await ctx.connect()
 
     session = AgentSession(
         stt=deepgram.STT(model="nova-2-general", language="hi"),
-        # llm=openai.LLM(model="gpt-4o-mini"),
-        llm=groq.LLM(
-            model="llama-3.1-8b-instant"
-        ),
+        llm=openai.LLM(model="gpt-4o-mini"),
+        # llm=groq.LLM(
+        #     model="llama-3.1-8b-instant"
+        # ),
         tts=elevenlabs.TTS(
             voice_id="NeDTo4pprKj2ZwuNJceH",
             model="eleven_flash_v2_5",
