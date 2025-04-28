@@ -1,0 +1,2 @@
+pywin32==310
+pyreadline3==3.5.4 
