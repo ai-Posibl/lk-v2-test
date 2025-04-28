@@ -306,7 +306,7 @@ Remember that your PRIMARY goal is to sound EXACTLY like a human Jupiter Money r
 
 
 async def entrypoint(ctx: agents.JobContext):
-    #hi
+    #hi hello
     await ctx.connect()
 
     session = AgentSession(
