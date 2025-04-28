@@ -361,8 +361,6 @@ async def entrypoint(ctx: agents.JobContext):
     
     @session.on("metrics_collected")
     def _on_metrics_collected(agent_metrics: MetricsCollectedEvent):
-        logger.info(f"Metrics collected: {agent_metrics.metrics}")
-        # usage_collector.collect(agent_metrics.metrics)
 
         nonlocal cumulative_metrics  # Make the dictionary nonlocal
 
@@ -374,22 +372,18 @@ async def entrypoint(ctx: agents.JobContext):
         #     cumulative_metrics["vad_inference_count"].append(metric_data.inference_count)
         #     cumulative_metrics["vad_inference_duration_total"].append(metric_data.inference_duration_total)
         if isinstance(metric_data, metrics.EOUMetrics):
-            logger.info(f"EOUMetrics collected: {metric_data}")
             cumulative_metrics["end_of_utterance_delay"].append(metric_data.end_of_utterance_delay)
             cumulative_metrics["transcription_delay"].append(metric_data.transcription_delay)
         elif isinstance(metric_data, metrics.LLMMetrics):
-            logger.info(f"LLMMetrics collected: {metric_data}")
             cumulative_metrics["llm_ttft"].append(metric_data.ttft)
             cumulative_metrics["llm_prompt_tokens"] += metric_data.prompt_tokens
             cumulative_metrics["llm_completion_tokens"] += metric_data.completion_tokens
             # logger.info(f"LLM Metrics collected: prompt={metric_data.prompt_tokens}, completion={metric_data.completion_tokens}")
         elif isinstance(metric_data, metrics.STTMetrics):
-            logger.info(f"STTMetrics collected: {metric_data}")
             # cumulative_metrics["stt_duration"] += metric_data.duration
             cumulative_metrics["stt_audio_duration"] += metric_data.audio_duration
             # logger.info(f"STT Metrics collected: duration={metric_data.duration}, audio_duration={metric_data.audio_duration}")
         elif isinstance(metric_data, metrics.TTSMetrics):
-            logger.info(f"TTSMetrics collected: {metric_data}")
             cumulative_metrics["tts_ttfb"].append(metric_data.ttfb)
             cumulative_metrics["tts_characters_count"] += metric_data.characters_count
             # cumulative_metrics["tts_duration"].append(metric_data.duration)
